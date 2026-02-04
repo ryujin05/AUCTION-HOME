@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  # Backend API
+  backend:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: real-estate-backend
+    ports:
+      - "5000:5000"
+    env_file: .env
+    networks:
+      - real-estate-network
+    restart: unless-stopped
+
+  # Frontend (production build)
+  # Frontend (production build)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: real-estate-frontend
+    ports:
+      - "80:80"
+    env_file: ./frontend/.env
+    environment:
+      VITE_API_BASE_URL: http://backend:5000/api
+      VITE_SOCKET_URL: http://backend:5000
+    depends_on:
+      - backend
+    networks:
+      - real-estate-network
+    restart: unless-stopped
+
+networks:
+  real-estate-network:
+    driver: bridge
