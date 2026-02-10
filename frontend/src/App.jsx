@@ -17,6 +17,7 @@ import MessageCenter from "./pages/Admin/MessageCenter.jsx";
 import ReportsManager from "./pages/Admin/ReportsManager.jsx";
 import AdminActions from "./pages/Admin/AdminActions.jsx";
 import SystemSettings from "./pages/Admin/SystemSettings.jsx";
+import PricePrediction from "./pages/Admin/PricePrediction.jsx";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import HomePanel from "./components/HomePanel.jsx";
@@ -166,6 +167,7 @@ function App() {
               <Route path="messages" element={<MessageCenter />} />
               <Route path="actions" element={<AdminActions />} />
               <Route path="reports" element={<ReportsManager />} />
+              <Route path="price-prediction" element={<PricePrediction />} />
             </Route>
 
             <Route path="*" element={<NotFound />} />

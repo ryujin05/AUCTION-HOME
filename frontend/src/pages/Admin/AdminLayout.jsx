@@ -1,7 +1,7 @@
 import { Box, Flex, VStack, HStack, Text, IconButton, Button, Avatar, Divider, useColorModeValue, Image, Icon } from "@chakra-ui/react";
 import { NavLink, Outlet, useNavigate, useLocation, Link } from "react-router-dom";
 import { useState } from 'react';
-import { MdDashboard, MdHome, MdPeople, MdMessage, MdBarChart, MdHistory, MdLogout, MdWarning } from "react-icons/md";
+import { MdDashboard, MdHome, MdPeople, MdMessage, MdBarChart, MdHistory, MdLogout, MdWarning, MdTrendingUp } from "react-icons/md";
 import { useBreakpointValue } from "@chakra-ui/react";
 
 export default function AdminLayout() {
@@ -82,6 +82,13 @@ export default function AdminLayout() {
             <HStack spacing={2}>
               <Icon as={MdHistory} boxSize={5} />
               {!isCollapsed && <Text>Lịch sử hoạt động</Text>}
+            </HStack>
+          </Button>
+
+          <Button as={NavLink} to="/admin/price-prediction" {...itemProps("/admin/price-prediction")} w="full" justifyContent={isCollapsed ? "center" : "flex-start"}>
+            <HStack spacing={2}>
+              <Icon as={MdTrendingUp} boxSize={5} />
+              {!isCollapsed && <Text>Dự báo giá</Text>}
             </HStack>
           </Button>
 

@@ -19,6 +19,7 @@ import {
   getAnnouncements,
   getSystemConfig,
   updateSystemConfig,
+  getPricePrediction,
 } from "../controllers/admin.controller.js";
 import { verifyToken } from "../middleware/verifyToken.js";
 import { verifyAdmin } from "../middleware/verifyAdmin.js";
@@ -52,5 +53,6 @@ router.get('/actions', getAdminActions);
 router.post("/broadcast", validateBroadcast, broadcastSystemNotification);
 router.get("/notifications", getNotifications);
 router.get("/announcements", getAnnouncements);
+router.get("/price-prediction", getPricePrediction);
 
 export default router;

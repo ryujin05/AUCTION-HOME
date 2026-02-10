@@ -7,6 +7,12 @@ import Announcement from "../models/announcement.model.js";
 import { TEMPLATES } from "../utils/notificationTemplates.js";
 import AnnouncementRead from "../models/announcementRead.model.js";
 import SystemConfig from "../models/systemConfig.model.js";
+import { spawn } from "child_process";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export const createSystemAnnouncement = async (req, res) => {
   try {
@@ -981,3 +987,59 @@ export const getAnnouncements = async (req, res) => {
     return res.status(500).json({ message: "Server error" });
   }
 };
+
+// ============= PRICE PREDICTION (Python + scikit-learn) =============
+export const getPricePrediction = async (req, res) => {
+  try {
+    const { area, bedroom } = req.query;
+
+    if (!area || !bedroom) {
+      return res.status(400).json({ message: "Thiếu diện tích hoặc số phòng ngủ" });
+    }
+
+    // Lấy dữ liệu sạch từ DB
+    const listings = await Listing.find({
+      status: "approved",
+      price: { $gt: 0 },
+      area: { $gt: 0 },
+      bedroom: { $gte: 0 }
+    }).select("area bedroom price");
+
+    if (listings.length < 5) {
+      return res.status(400).json({ message: "Không đủ dữ liệu (cần ít nhất 5 bản ghi)" });
+    }
+
+    const data = listings.map(l => ({ area: l.area, bedroom: l.bedroom, price: l.price }));
+    const inputData = JSON.stringify({ data, area: parseFloat(area), bedroom: parseFloat(bedroom) });
+
+    // Gọi Python script
+    const pythonScript = path.join(__dirname, "../ml/price_predictor.py");
+    const python = spawn("python", [pythonScript]);
+
+    let result = "";
+    let error = "";
+
+    python.stdout.on("data", (d) => { result += d.toString(); });
+    python.stderr.on("data", (d) => { error += d.toString(); });
+
+    python.stdin.write(inputData);
+    python.stdin.end();
+
+    python.on("close", (code) => {
+      if (code !== 0) {
+        console.error("Python error:", error);
+        return res.status(500).json({ message: "Lỗi Python: " + error });
+      }
+      try {
+        return res.json(JSON.parse(result));
+      } catch (e) {
+        return res.status(500).json({ message: "Lỗi parse kết quả" });
+      }
+    });
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
