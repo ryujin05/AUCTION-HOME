@@ -28,3 +28,4 @@ dist-ssr
 *.pem
 
 frontend/.env-example
+.env-example  
