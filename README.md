@@ -46,7 +46,7 @@
 
 ## 🎥 Live Demo
 
-[![Watch Demo on Google Drive](https://img.shields.io/badge/Google%20Drive-Demo-4285F4?logo=google-drive&logoColor=white)](https://drive.google.com/file/d/1D5CWyTqM3gV3bwEY3_xtLkyQJ7u4Zm78/view?usp=drive_link)
+[![Watch Demo on Google Drive](https://img.shields.io/badge/Google%20Drive-Demo-4285F4?logo=google-drive&logoColor=white)]([https://drive.google.com/file/d/1D5CWyTqM3gV3bwEY3_xtLkyQJ7u4Zm78/view?usp=drive_link](https://drive.google.com/file/d/1TSZYkAHAuPCsgE1LpJpEykQ4lV6Fcg3g/view?usp=sharing))
 
 **Watch the full demo:** [Google Drive Link]([https://drive.google.com/file/d/1D5CWyTqM3gV3bwEY3_xtLkyQJ7u4Zm78/view?usp=drive_link](https://drive.google.com/file/d/1TSZYkAHAuPCsgE1LpJpEykQ4lV6Fcg3g/view?usp=sharing))
 
